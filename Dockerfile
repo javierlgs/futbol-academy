@@ -22,7 +22,11 @@ RUN a2enmod rewrite
 
 # Copiar archivos del proyecto
 COPY . /var/www/html
+# Instalar Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Instalar dependencias de Laravel
+RUN composer install --no-dev --optimize-autoloader
 # Crear archivo .env dentro del contenedor usando variables de Render
 RUN echo "APP_ENV=production" > /var/www/html/.env \
     && echo "APP_KEY=${APP_KEY}" >> /var/www/html/.env \
@@ -37,11 +41,7 @@ RUN echo "APP_ENV=production" > /var/www/html/.env \
 # Configurar Apache para servir Laravel desde /public
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Instalar Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Instalar dependencias de Laravel
-RUN composer install --no-dev --optimize-autoloader
 
 # Dar permisos a storage y cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
