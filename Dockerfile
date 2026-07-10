@@ -34,6 +34,9 @@ RUN echo "APP_ENV=production" > /var/www/html/.env \
     && echo "DB_USERNAME=${DB_USERNAME}" >> /var/www/html/.env \
     && echo "DB_PASSWORD=${DB_PASSWORD}" >> /var/www/html/.env
 
+# Configurar Apache para servir Laravel desde /public
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
