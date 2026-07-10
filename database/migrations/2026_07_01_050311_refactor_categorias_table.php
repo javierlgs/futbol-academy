@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration {
     public function up(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         
         if (Schema::hasTable('entrenamientos')) {
             DB::table('entrenamientos')->delete();
@@ -44,7 +43,6 @@ return new class extends Migration {
             // Ya existe el índice, no pasa nada
         }
         
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     public function down(): void
