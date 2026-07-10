@@ -10,9 +10,11 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libwebp-dev \
     libfreetype6-dev \
+    libzip-dev \
     && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
     && docker-php-ext-install gd \
     && docker-php-ext-install exif \
+    && docker-php-ext-install zip \
     && docker-php-ext-install pdo pdo_pgsql
 
 # Habilitar mod_rewrite para Laravel
