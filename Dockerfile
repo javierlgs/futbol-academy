@@ -23,6 +23,9 @@ RUN a2enmod rewrite
 # Copiar archivos del proyecto
 COPY . /var/www/html
 
+# Configurar Apache para servir Laravel desde /public
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
