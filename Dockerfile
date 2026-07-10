@@ -34,14 +34,10 @@ RUN composer install --no-dev --optimize-autoloader
 
 # Dar permisos a storage y cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Exponer el puerto
 EXPOSE 80
-
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-RUN php artisan migrate --force
 
 # Comando de inicio
 CMD ["apache2-foreground"]
