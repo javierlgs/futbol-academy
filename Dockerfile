@@ -26,6 +26,18 @@ COPY . /var/www/html
 # Configurar Apache para servir Laravel desde /public
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
+# Crear archivo .env dentro del contenedor usando variables de Render
+RUN echo "APP_ENV=production" > /var/www/html/.env \
+    && echo "APP_KEY=${APP_KEY}" >> /var/www/html/.env \
+    && echo "APP_DEBUG=false" >> /var/www/html/.env \
+    && echo "DB_CONNECTION=pgsql" >> /var/www/html/.env \
+    && echo "DB_HOST=${DB_HOST}" >> /var/www/html/.env \
+    && echo "DB_PORT=${DB_PORT}" >> /var/www/html/.env \
+    && echo "DB_DATABASE=${DB_DATABASE}" >> /var/www/html/.env \
+    && echo "DB_USERNAME=${DB_USERNAME}" >> /var/www/html/.env \
+    && echo "DB_PASSWORD=${DB_PASSWORD}" >> /var/www/html/.env
+
+    
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
