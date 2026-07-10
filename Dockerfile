@@ -41,6 +41,7 @@ EXPOSE 80
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+RUN php artisan migrate --force
 
 # Comando de inicio
 CMD ["apache2-foreground"]
